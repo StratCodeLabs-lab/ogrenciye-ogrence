@@ -217,6 +217,7 @@ function renderShell(active, content) {
           <div class="mobile-brand">${brandMark()}<span>Öğrenciye Öğrence</span></div>
           <div class="topbar-title">${topTitle}</div>
           <div class="student-chip"><span class="student-avatar">${escapeHTML(firstName.slice(0, 1).toLocaleUpperCase("tr-TR"))}</span><span class="student-chip-name">${escapeHTML(displayName)}</span></div>
+          <button class="mobile-logout" type="button" data-action="logout" aria-label="Çıkış yap">${icon("logout", 16)}<span>Çıkış</span></button>
         </header>
         <nav class="mobile-nav" aria-label="Mobil gezinme">
           ${navLink("#/", "Soru akışı", "message", active === "feed", true)}
