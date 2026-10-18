@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Öğrenciye Öğrence simgesi">
+  <rect width="512" height="512" rx="150" fill="#B66D4D"/>
+  <path d="M131 144c0-17 14-31 31-31h160c17 0 31 14 31 31v147c0 17-14 31-31 31h-34l-52 53v-53h-74c-17 0-31-14-31-31V144Z" fill="#FFF9F0"/>
+  <path d="M191 191h102M191 232h86M191 273h57" fill="none" stroke="#B66D4D" stroke-linecap="round" stroke-width="18"/>
+  <path d="M338 334h22c18 0 33-15 33-33v-51" fill="none" stroke="#F2D9C7" stroke-linecap="round" stroke-width="18"/>
+  <circle cx="393" cy="230" r="12" fill="#F2D9C7"/>
+</svg>
