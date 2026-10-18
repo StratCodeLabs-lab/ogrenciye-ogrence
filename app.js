@@ -1,4 +1,3 @@
-import { REGISTERED_STUDENTS } from "./students.js";
 import { FIREBASE_CONFIG } from "./config.js";
 import { hasForbiddenPostText } from "./moderation.js";
 import { createStore, attachSavedState, toggleSaved, compressImage, MAX_IMAGE_BYTES, IMAGE_TYPES } from "./store.js";
@@ -64,11 +63,12 @@ function isNameFormatValid(value) {
 
 const SESSION_KEY = "oo:session";
 const ATTEMPT_KEY = "oo:attempts";
-const SESSION_LIFETIME_MS = 7 * 24 * 60 * 60 * 1000;
+const SESSION_LIFETIME_MS = 12 * 60 * 60 * 1000;
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCK_MS = 5 * 60 * 1000;
 
 let store = null;
+let REGISTERED_STUDENTS = [];
 
 function readStorage(key) {
   try {
@@ -96,10 +96,21 @@ function publicStudent(student) {
 }
 
 function loadSession() {
-  const session = readStorage(SESSION_KEY);
-  if (!session || typeof session.studentId !== "number" || !(session.expiresAt > Date.now())) return null;
-  const student = REGISTERED_STUDENTS.find(account => account.id === session.studentId);
-  return student ? publicStudent(student) : null;
+  // Eski sürümden kalan kalıcı oturumlar (localStorage) artık geçerli değil; temizle.
+  try { localStorage.removeItem(SESSION_KEY); } catch { /* yoksay */ }
+  let session = null;
+  try { session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"); } catch { /* yoksay */ }
+  if (!session || !(session.expiresAt > Date.now())) return null;
+  const student = REGISTERED_STUDENTS.find(account =>
+    account.id === session.studentId
+    && account.schoolNumber === session.schoolNumber
+    && normalizeStudentName(account.displayName) === session.nameKey,
+  );
+  if (!student) {
+    try { sessionStorage.removeItem(SESSION_KEY); } catch { /* yoksay */ }
+    return null;
+  }
+  return publicStudent(student);
 }
 
 function loginStudent(name, schoolNumber) {
@@ -123,12 +134,20 @@ function loginStudent(name, schoolNumber) {
   }
 
   writeStorage(ATTEMPT_KEY, null);
-  writeStorage(SESSION_KEY, { studentId: student.id, expiresAt: now + SESSION_LIFETIME_MS });
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      studentId: student.id,
+      schoolNumber: student.schoolNumber,
+      nameKey: normalizeStudentName(student.displayName),
+      expiresAt: now + SESSION_LIFETIME_MS,
+    }));
+  } catch { /* depolama kapalıysa oturum yalnızca sayfa açıkken geçerli olur */ }
   return publicStudent(student);
 }
 
 function logoutStudent() {
-  writeStorage(SESSION_KEY, null);
+  try { sessionStorage.removeItem(SESSION_KEY); } catch { /* yoksay */ }
+  try { localStorage.removeItem(SESSION_KEY); } catch { /* yoksay */ }
 }
 
 function getRoute() {
@@ -689,6 +708,12 @@ window.addEventListener("hashchange", () => {
 
 (async () => {
   renderLoading();
+  try {
+    ({ REGISTERED_STUDENTS } = await import(`./students.js?v=${Date.now()}`));
+  } catch {
+    renderLogin("Öğrenci listesi yüklenemedi. Sayfayı yenileyip yeniden deneyin.");
+    return;
+  }
   store = await createStore(FIREBASE_CONFIG);
   await renderCurrentPage();
 })();
