@@ -6,9 +6,11 @@
 //  "id" her öğrenci için benzersiz olmalı; bir kez verdiğin id'yi sonra değiştirme.
 // ─────────────────────────────────────────────────────────────
 export const REGISTERED_STUDENTS = [
-  { id: 1, displayName: "Ata Yankı Kılınç", schoolNumber: "468" },
+  { id: 4, displayName: "Zehra Naz Ay", schoolNumber: "406" },
+  { id: 4, displayName: "Salih Çağan Cerrahoğlu", schoolNumber: "429" },
   { id: 2, displayName: "Aysima Mucan", schoolNumber: "460" },
   { id: 3, displayName: "Rüya Yavuz", schoolNumber: "461" },
+    { id: 1, displayName: "Ata Yankı Kılınç", schoolNumber: "468" },
   { id: 4, displayName: "Cenk Şerefli", schoolNumber: "517" },
   { id: 4, displayName: "Emir Özsoy", schoolNumber: "521" },
 ];
