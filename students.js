@@ -10,4 +10,5 @@ export const REGISTERED_STUDENTS = [
   { id: 2, displayName: "Aysima Mucan", schoolNumber: "460" },
   { id: 3, displayName: "Rüya Yavuz", schoolNumber: "461" },
   { id: 4, displayName: "Ahmet Mehmet", schoolNumber: "999" },
+  { id: 4, displayName: "Cenk Şerefli", schoolNumber: "517" },
 ];
