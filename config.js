@@ -1,22 +1,14 @@
 // ─────────────────────────────────────────────────────────────
-//  VERİ DEPOLAMA AYARI
+//  VERİTABANI AYARI
 //
-//  GitHub Pages yalnızca statik dosya sunar; öğrencilerin birbirinin gönderilerini
-//  görebilmesi için ücretsiz bir bulut veritabanı (Firebase Firestore) gerekir.
-//
-//  • FIREBASE_CONFIG = null  →  "Yerel mod": gönderiler sadece o tarayıcıda saklanır
-//                               (deneme/tanıtım için; öğrenciler birbirini GÖRMEZ).
-//  • FIREBASE_CONFIG = {...} →  "Paylaşımlı mod": herkes aynı akışı görür.
-//
-//  Kurulum adımları README.md içinde anlatılıyor.
+//  Tüm gönderiler ve yorumlar Firebase Firestore'da saklanır; böylece
+//  siteye giren her öğrenci aynı akışı görür.
+//  (Web uygulamalarında apiKey'in herkese açık olması normaldir;
+//   erişimi Firestore güvenlik kuralları sınırlar.)
 // ─────────────────────────────────────────────────────────────
-export const FIREBASE_CONFIG = null;
-
-/* Örnek (Firebase konsolundan kopyaladığın değerlerle değiştir):
 export const FIREBASE_CONFIG = {
-  apiKey: "AIza...",
-  authDomain: "proje-adin.firebaseapp.com",
-  projectId: "proje-adin",
-  appId: "1:123456:web:abcdef",
+  apiKey: "AIzaSyDJhbEXM28bTY0AR-5FXm8TH6YJ3p-_qZ0",
+  authDomain: "ogrenciye-ogrence.firebaseapp.com",
+  projectId: "ogrenciye-ogrence",
+  appId: "1:799957240123:web:85d3c9a0adb40c4aa00f1e",
 };
-*/
